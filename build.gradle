@@ -60,7 +60,7 @@ pluginManager.withPlugin('biz.aQute.bnd.builder') { // if plugin applied, execut
 allprojects {
     apply plugin: 'java'
     apply plugin: 'java-library' // to avoid https://github.com/gradle/gradle/issues/1118
-//    apply plugin: "org.beryx.jar" // for compiling module-info on Java 8
+    apply plugin: "org.beryx.jar" // for compiling module-info on Java 8
 
     if (!JavaVersion.current().isJava9Compatible()) {
         sourceCompatibility = 1.5
@@ -105,12 +105,12 @@ allprojects {
     javadoc.options.addStringOption('Xdoclint:none', '-quiet')
 
     // work around https://github.com/gradle/gradle/issues/4046
-//    javadoc.dependsOn('copyJavadocDocFiles')
-//    task copyJavadocDocFiles(type: Copy) {
-//        from('src/main/java')
-//        into 'build/docs/apidocs'
-//        include '**/doc-files/*.*'
-//    }
+    javadoc.dependsOn('copyJavadocDocFiles')
+    task copyJavadocDocFiles(type: Copy) {
+        from('src/main/java')
+        into 'build/docs/apidocs'
+        include '**/doc-files/*.*'
+    }
     if (!project.name in ['picocli-examples', 'picocli-annotation-processing-tests']) {
         //sourceSets.main.java.srcDirs = ['src/main/java', 'src/main/java9']
         compileJava {
@@ -128,13 +128,13 @@ allprojects {
             //        logger.info("classpath is " + classpath.files)
             //    }
         }
-//        moduleConfig {
-//            // copy module-info.class to META-INF/versions/9
-//            multiReleaseVersion = 9
-//            moduleInfoPath = 'src/main/java9/module-info.java'
-//            version = project.version
-//            neverCompileModuleInfo = true
-//        }
+        moduleConfig {
+            // copy module-info.class to META-INF/versions/9
+            multiReleaseVersion = 9
+            moduleInfoPath = 'src/main/java9/module-info.java'
+            version = project.version
+            neverCompileModuleInfo = true
+        }
     }
 }
 
@@ -150,13 +150,13 @@ compileJava {
 //        classpath = files()
 //    }
 }
-//moduleConfig {
-//    // copy module-info.class to META-INF/versions/9
-//    multiReleaseVersion = 9
-//    moduleInfoPath = 'src/main/java9/module-info.java'
-//    version = project.version
-//    neverCompileModuleInfo = true
-//}
+moduleConfig {
+    // copy module-info.class to META-INF/versions/9
+    multiReleaseVersion = 9
+    moduleInfoPath = 'src/main/java9/module-info.java'
+    version = project.version
+    neverCompileModuleInfo = true
+}
 jar {
     manifest {
         attributes 'Specification-Title'   : 'picocli',
