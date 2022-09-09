@@ -103,6 +103,7 @@ allprojects {
 
     javadoc.destinationDir = file("build/docs/apidocs")
     javadoc.options.addStringOption('Xdoclint:none', '-quiet')
+    // Workaround frpm https://bugs.openjdk.org/browse/JDK-4973681
     javadoc.options.addStringOption('sourcepath', 'src/main/java')
 
     if (!project.name in ['picocli-examples', 'picocli-annotation-processing-tests']) {
