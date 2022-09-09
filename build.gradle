@@ -104,7 +104,7 @@ allprojects {
     javadoc.destinationDir = file("build/docs/apidocs")
     javadoc.options.addStringOption('Xdoclint:none', '-quiet')
     javadoc.options.addStringOption('sourcepath', 'src/main/java')
-    
+
     if (!project.name in ['picocli-examples', 'picocli-annotation-processing-tests']) {
         //sourceSets.main.java.srcDirs = ['src/main/java', 'src/main/java9']
         compileJava {
@@ -160,6 +160,13 @@ jar {
                    'Implementation-Vendor' : 'Remko Popma',
                    'Implementation-Version': archiveVersion.get(),
                    'Main-Class'            : 'picocli.AutoComplete'
+    }
+}
+normalization {
+    runtimeClasspath {
+        metaInf {
+            ignoreAttribute("Bnd-LastModified")
+        }
     }
 }
 configurations {
