@@ -130,6 +130,14 @@ allprojects {
             neverCompileModuleInfo = true
         }
     }
+
+    normalization {
+        runtimeClasspath {
+            metaInf {
+                ignoreAttribute("Bnd-LastModified")
+            }
+        }
+    }
 }
 
 //sourceSets.main.java.srcDirs = ['src/main/java', 'src/main/java9']
@@ -160,13 +168,6 @@ jar {
                    'Implementation-Vendor' : 'Remko Popma',
                    'Implementation-Version': archiveVersion.get(),
                    'Main-Class'            : 'picocli.AutoComplete'
-    }
-}
-normalization {
-    runtimeClasspath {
-        metaInf {
-            ignoreAttribute("Bnd-LastModified")
-        }
     }
 }
 configurations {
